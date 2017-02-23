@@ -43,7 +43,7 @@ long delayTime = 1000/n;
 
 for (int i = 0; i < 256; i++) {
 	printf("%i", waveTable[i]);
-	printf("%c", ' ');
+	printf("%c", ',');
 }
 
 // printArray(waveTable);
