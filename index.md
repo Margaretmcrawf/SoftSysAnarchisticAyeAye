@@ -10,7 +10,7 @@ Digital audio synthesis is essentially taking digital signals or data and conver
 Our hardware consists of an Arduino Mega (a microcontroller board based on the ATmega2560 chip), an 8-bit R-2R ladder network, an op-amp, a transistor, and a speaker. More detailed instructions on the components and how to assemble the hardware can be found [here](http://thinkdsp.blogspot.com/2014/02/build-softsyssynth.html)
 Essentially, the R-2R network acts as a simple digital to analog converter (DAC), the operational amplifier serves as a buffer, and the transistor amplifies the resulting analog signal to a level sufficient to drive the speaker.
 
-Our software implementaion works by first generating a 256 element long array that contains a single sine wave period with values between 0 and 255 inclusive. Initially we had a separate function that generated this table, but during the process of debugging we removed the function and replaced it with a specific definition.
+Our software implementaion works by first generating a 256 element long array that contains a single sine wave period with values between 0 and 255 inclusive. Initially we had a separate function that generated this table, but during the process of debugging we removed the function and replaced it with a specific definition to ensure that the values were what we expected.
 ```
 #define LENGTH 256 // Length of the wave lookup table
 unsigned char index=0; // Points to each table entry
@@ -18,14 +18,24 @@ int wave[]={128,131,134,137,140,143,146,149,152,156,159,162,165,168,171,174,176,
 
 ```
 
-We then loop through each of these values and send them to the register on the Mega. When the values are passed through the ladder network, which outputs a voltage to the op-amp, which serves as a buffer. Then it is passed to the transistor which acts as an amplifier, and to the speaker which plays a sound based on how much voltage it is getting. 
+We connected the 8 bit DAC to PORT A on the arduino (digital pins 22 - 29). In our program we called `DDRA=0xff;` which essentially sets all 8 bits of the register for PORT A to 1 (sets the pin as an output).
 
-When we finished this project, our biggest hurdle was getting the timing to work. The way that we had planned to loop through the values in the sine wave array was using hardware interrupts on the Mega. There is a built in timer on the board that runs at 16 mHz, and at certain times you can trigger functions. In our case, we wanted to use some conversions to set an interrupt that lined up with an input frequency, then we wanted to send a new value from the array each time the timer value was hit, and reset the timer. Unfortunately we were having a lot of trouble getting the interrupt to actually work, and Mega documentation was scarce. While debugging embedded code is a useful skill to practice, at the point that the project ended we did not think we would learn much more from continuing to work through it. One thing that could have work instead of the hardware interrupts was to find the frequency of the base loop, then calibrate it to other frequencies by using delays. 
+In a loop we access successive elements of the wave table and write PORT A to this value.
+```
+void loop() {
+ PORTA = wave[index++]; // Update the PWM output
+ delayMicroseconds(6);
+}
+```
+
+Because index was initialized as an unsigned char (`unsigned char index=0;`) which has a maximum value of 255, when the index goes beyond 255, it overflows back to 0, ensuring that we only attempt to access valid indices of our wave table.
 
 ![Image of our circuit](images/IMG_7275.JPG)
 
 ## Results:
 
+
+When we finished this project, our biggest hurdle was getting the timing to work. The way that we had planned to loop through the values in the sine wave array was using hardware interrupts on the Mega. There is a built in timer on the board that runs at 16 mHz, and at certain times you can trigger functions. In our case, we wanted to use some conversions to set an interrupt that lined up with an input frequency, then we wanted to send a new value from the array each time the timer value was hit, and reset the timer. Unfortunately we were having a lot of trouble getting the interrupt to actually work, and Mega documentation was scarce. While debugging embedded code is a useful skill to practice, at the point that the project ended we did not think we would learn much more from continuing to work through it. One thing that could have work instead of the hardware interrupts was to find the frequency of the base loop, then calibrate it to other frequencies by using delays. 
 
 ## License:
 
