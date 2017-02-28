@@ -65,7 +65,7 @@ To use this program:
 * Download rawCSineFreq.ino from our repo (link located at the top of this webpage). Alternatively you can fork/clone our entire     repository.
 * Open rawCSineFreq.ino in the arduino development environment
 * Follow this [tutorial](http://thinkdsp.blogspot.com/2014/02/build-softsyssynth.html) to build the hardware
-  Plug in the arduino, and upload your program
+* Plug in the arduino, and upload your program
 
 ## License:
 
