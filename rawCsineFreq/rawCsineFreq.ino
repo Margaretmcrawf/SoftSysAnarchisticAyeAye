@@ -1,5 +1,4 @@
 #include <avr/interrupt.h> // Use timer interrupt library
-
 /******** Sine wave parameters ********/
 #define PI2 6.283185 // 2*PI saves calculation later
 #define AMP 127 // Scaling factor for sine wave
@@ -17,17 +16,19 @@ void setup() {
 DDRA=0xff;
 
 /******** Set up timer2 to call ISR ********/
- TCCR2A = 0; // No options in control register A
- TCCR2B = (1 << CS10); // Set prescaler to divide by 8
- TIMSK2 = (1 << OCIE2A); // Call ISR when TCNT2 = OCRA2
- OCR2A = 30; // Set frequency of generated wave
- sei(); // Enable interrupts to generate waveform!
+// TCCR2A = 0; // No options in control register A
+// TCCR2B = (1 << CS10); // Set prescaler to divide by 8
+// TIMSK2 = (1 << OCIE2A); // Call ISR when TCNT2 = OCRA2
+// OCR2A = 30; // Set frequency of generated wave
+// sei(); // Enable interrupts to generate waveform!
 }
 
-void loop() { // Nothing to do!
+void loop() {
+ PORTA = wave[index++]; // Update the PWM output
+ delayMicroseconds(6);
 }
 
 /******** Called every time TCNT2 = OCR2A ********/
-ISR(TIMER2_COMPA_vect) { // Called when TCNT2 == OCR2A
- PORTA = wave[index++]; // Update the PWM output
-}
+//ISR(TIMER2_COMPA_vect) { // Called when TCNT2 == OCR2A
+ //PORTA = wave[index++]; // Update the PWM output
+//}
