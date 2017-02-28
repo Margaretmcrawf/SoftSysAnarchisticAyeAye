@@ -33,9 +33,28 @@ Because index was initialized as an unsigned char (`unsigned char index=0;`) whi
 ![Image of our circuit](images/IMG_7275.JPG)
 
 ## Results:
-
+![Video of Working Synthesizer](images/softsys.mp4)
 
 When we finished this project, our biggest hurdle was getting the timing to work. The way that we had planned to loop through the values in the sine wave array was using hardware interrupts on the Mega. There is a built in timer on the board that runs at 16 mHz, and at certain times you can trigger functions. In our case, we wanted to use some conversions to set an interrupt that lined up with an input frequency, then we wanted to send a new value from the array each time the timer value was hit, and reset the timer. Unfortunately we were having a lot of trouble getting the interrupt to actually work, and Mega documentation was scarce. While debugging embedded code is a useful skill to practice, at the point that the project ended we did not think we would learn much more from continuing to work through it. One thing that could have work instead of the hardware interrupts was to find the frequency of the base loop, then calibrate it to other frequencies by using delays. 
+
+## Helpful Resources:
+
+#### [AVR Synth Tutorials](http://playground.arduino.cc/Main/ArduinoSynth)
+A list of AVR synthesizer projects, with plenty of links to other resources.
+
+#### [Arduino Sound (Part 1)](http://www.uchobby.com/index.php/2007/11/11/arduino-sound-part-1/)
+A very thorough breakdown of all the pros and cons of different ways to synthesize sound with an arduino, along with links to examples of each. This is by far one of the most useful resources we have found - highly recommended.
+
+#### [Direct Digital Synthesis Tutorial](http://codeandlife.com/2012/03/13/fast-dds-with-atmega88/)
+A tutorial for generating sine waves via direct digital synthesis in software. Also dips a little into optimization with Assembly.
+Building an Arduino Based Musical Synthesizer
+
+#### [Build The SoftSysSynth](http://thinkdsp.blogspot.com/2014/02/build-softsyssynth.html)
+A set of step by step instructions for assembling the hardware for an arduino synthesizer. We based our hardware off of this.
+
+#### [Arduino Timer Interrupts](http://www.instructables.com/id/Arduino-Timer-Interrupts/)
+A tutorial for how to work with the built in timers on arduino.
+
 
 ## License:
 
@@ -60,21 +79,3 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-
-
-
-#### [AVR Synth Tutorials](http://playground.arduino.cc/Main/ArduinoSynth)
-A list of AVR synthesizer projects, with plenty of links to other resources.
-
-#### [Arduino Sound (Part 1)](http://www.uchobby.com/index.php/2007/11/11/arduino-sound-part-1/)
-A very thorough breakdown of all the pros and cons of different ways to synthesize sound with an arduino, along with links to examples of each. This is by far one of the most useful resources we have found - highly recommended.
-
-#### [Direct Digital Synthesis Tutorial](http://codeandlife.com/2012/03/13/fast-dds-with-atmega88/)
-A tutorial for generating sine waves via direct digital synthesis in software. Also dips a little into optimization with Assembly.
-Building an Arduino Based Musical Synthesizer
-
-#### [Build The SoftSysSynth](http://thinkdsp.blogspot.com/2014/02/build-softsyssynth.html)
-A set of step by step instructions for assembling the hardware for an arduino synthesizer. We based our hardware off of this.
-
-#### [Arduino Timer Interrupts](http://www.instructables.com/id/Arduino-Timer-Interrupts/)
-A tutorial for how to work with the built in timers on arduino, which will allow us to very precisely tune the frequency of our output.
