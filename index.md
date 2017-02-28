@@ -30,12 +30,15 @@ void loop() {
 
 Because index was initialized as an unsigned char (`unsigned char index=0;`) which has a maximum value of 255, when the index goes beyond 255, it overflows back to 0, ensuring that we only attempt to access valid indices of our wave table.
 
-![Image of our circuit](images/IMG_7275.JPG)
 
 ## Results:
+![Image of our circuit](images/IMG_7275.JPG)
+
 [Video of Working Synthesizer](https://www.youtube.com/watch?v=bA7xEoieor8&feature=youtu.be)
 
-When we finished this project, our biggest hurdle was getting the timing to work. The way that we had planned to loop through the values in the sine wave array was using hardware interrupts on the Mega. There is a built in timer on the board that runs at 16 mHz, and at certain times you can trigger functions. In our case, we wanted to use some conversions to set an interrupt that lined up with an input frequency, then we wanted to send a new value from the array each time the timer value was hit, and reset the timer. Unfortunately we were having a lot of trouble getting the interrupt to actually work, and Mega documentation was scarce. While debugging embedded code is a useful skill to practice, at the point that the project ended we did not think we would learn much more from continuing to work through it. One thing that could have work instead of the hardware interrupts was to find the frequency of the base loop, then calibrate it to other frequencies by using delays. 
+During this project, our biggest challenge was our attempts at implementing frequency/timing using the built in hardware counters. Indexing through the values in the sine wave array this way would have allowed for much better frequency reproduction and room for expansion to things such as polyphony.
+
+We are currently in the process of debugging what is causing our implentation to not work. We believe that it may be a result of the timer registers being improperly set. We have found a lot of documention on how to set the registers for the Arduino Uno, but not for the Arduino Mega. It is possible that the registers have slightly different names or locations and that this is causing our program to not work properly.
 
 ## Helpful Resources:
 
