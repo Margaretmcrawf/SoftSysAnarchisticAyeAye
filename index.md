@@ -33,7 +33,7 @@ Because index was initialized as an unsigned char (`unsigned char index=0;`) whi
 ![Image of our circuit](images/IMG_7275.JPG)
 
 ## Results:
-![Video of Working Synthesizer](https://youtu.be/bA7xEoieor8)
+![Video of Working Synthesizer](<iframe width="560" height="315" src="https://www.youtube.com/embed/bA7xEoieor8" frameborder="0" allowfullscreen></iframe>)
 
 When we finished this project, our biggest hurdle was getting the timing to work. The way that we had planned to loop through the values in the sine wave array was using hardware interrupts on the Mega. There is a built in timer on the board that runs at 16 mHz, and at certain times you can trigger functions. In our case, we wanted to use some conversions to set an interrupt that lined up with an input frequency, then we wanted to send a new value from the array each time the timer value was hit, and reset the timer. Unfortunately we were having a lot of trouble getting the interrupt to actually work, and Mega documentation was scarce. While debugging embedded code is a useful skill to practice, at the point that the project ended we did not think we would learn much more from continuing to work through it. One thing that could have work instead of the hardware interrupts was to find the frequency of the base loop, then calibrate it to other frequencies by using delays. 
 
